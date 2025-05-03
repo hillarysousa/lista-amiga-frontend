@@ -1,4 +1,5 @@
 "use client";
+import { useEffect } from "react";
 import Image from "next/image";
 import { UAParser } from "my-ua-parser";
 import Logo from "./assets/svg/logo_white.svg";
@@ -8,11 +9,13 @@ export default function Home() {
   const userAgent = new UAParser();
   const isDeviceNotMobile = userAgent.getDevice().type !== "mobile";
 
-  if (isDeviceNotMobile) {
-    return alert(
-      "Esse site pode ser visualizado apenas em dispositivos móveis."
-    );
-  }
+  useEffect(() => {
+    if (isDeviceNotMobile) {
+      return window.alert(
+        "Esse site pode ser visualizado apenas em dispositivos móveis."
+      );
+    }
+  });
   return (
     <div className="grid justify-items-center min-h-screen h-screen pb-2 bg-lightYellow bg-[url(./assets/img/pattern.png)] content-between">
       <div className="self-center mt-60">
