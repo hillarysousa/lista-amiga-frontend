@@ -8,8 +8,6 @@ import Logo from "./assets/svg/logo_white.svg";
 import { onAuthStateChanged, signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../../firebase-config";
 import { useMutation } from "@tanstack/react-query";
-import { setLogLevel } from "firebase/app";
-setLogLevel("debug");
 
 export default function Home() {
   const { mutate } = useMutation({
@@ -71,7 +69,6 @@ export default function Home() {
           onClick={handleLogin}
           className="flex items-center border border-gray-600 rounded-lg shadow-sm bg-white hover:shadow-md transition px-4 h-12"
         >
-          {" "}
           <div className="w-5 h-5 mr-3 flex items-center justify-center">
             <Image
               src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
