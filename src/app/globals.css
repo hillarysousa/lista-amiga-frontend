@@ -13,6 +13,7 @@
   --color-lightBlue: #294C60;
   --color-darkText: #222222;
   --color-grayBG: #EEEDEA;
+  --color-grayIcon: #B8B8B8;
 }
 
 @theme inline {
