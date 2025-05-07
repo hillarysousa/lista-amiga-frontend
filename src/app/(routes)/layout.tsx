@@ -33,9 +33,9 @@ export default function InternalLayout({
   }, [isSelected, pathname]);
 
   return (
-    <section>
+    <section className="bg-grayBG h-screen flex relative">
       <Header pageName={setPageTitle(pathname)} />
-      <div className="px-4 z-10 absolute top-46">{children}</div>
+      <div className="px-4 z-10 absolute top-46 w-full">{children}</div>
       <Menu isSelected={isSelected} />
     </section>
   );
