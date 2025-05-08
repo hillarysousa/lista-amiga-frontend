@@ -10,8 +10,8 @@ colors.set("lime", "AACC02");
 colors.set("seagreen", "008041");
 colors.set("cobalt", "2647A5");
 
-export function getRandomColor(): string {
+export const getRandomColor = () => {
   const values = Array.from(colors.values());
   const randomIndex = Math.floor(Math.random() * values.length);
   return values[randomIndex];
-}
+};

@@ -1,8 +1,9 @@
 "use client";
 import { useAuth } from "@/app/providers/AuthProvider";
-import { useGetUserLists } from "@/app/hooks/useLists";
+import { useGetUserLists } from "@/app/hooks/useGetUserLists";
 import { List } from "@/app/types/list";
 import { ListCard } from "@/app/components/listCard";
+import Link from "next/link";
 
 export default function Dashboard() {
   const { token, user } = useAuth();
@@ -21,15 +22,23 @@ export default function Dashboard() {
 
   return (
     <div className="w-full flex flex-col">
-      {unitedLists(data).map((list: List) => (
-        <ListCard
-          key={list.id}
-          name={list.name}
-          participants={list.participants}
-          createdDate={list.createdAt}
-          itemQuantity={list.items.length}
-        />
-      ))}
+      {unitedLists(data).map((list: List) => {
+        return (
+          <ListCard
+            key={list.id}
+            listId={list.id}
+            name={list.name}
+            participants={list.participants}
+            createdDate={list.createdAt}
+            itemQuantity={list.items.length}
+          />
+        );
+      })}
+      <Link href="/lists" className="flex self-end-safe">
+        <p className="text-darkBlue font-semibold uppercase text-base flex">
+          Ver mais
+        </p>
+      </Link>
     </div>
   );
 }
