@@ -21,10 +21,10 @@ const Menu = ({ isSelected }: MenuProps) => {
             }
           />
         </Link>
-        <Link href="/list" className="p-4">
+        <Link href="/lists" className="p-4">
           <IconLists
             className={
-              isSelected === "/list" ? "text-darkBlue" : "text-grayIcon"
+              isSelected?.includes("/lists") ? "text-darkBlue" : "text-grayIcon"
             }
           />
         </Link>
@@ -33,10 +33,10 @@ const Menu = ({ isSelected }: MenuProps) => {
             <IconPlus className="text-darkBlue" />
           </div>
         </Link>
-        <Link href="/item" className="p-4">
+        <Link href="/items" className="p-4">
           <IconItems
             className={
-              isSelected === "/item" ? "text-darkBlue" : "text-grayIcon"
+              isSelected?.includes("/items") ? "text-darkBlue" : "text-grayIcon"
             }
           />
         </Link>

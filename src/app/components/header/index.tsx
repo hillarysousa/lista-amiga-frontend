@@ -7,7 +7,7 @@ interface HeaderProps {
 
 const Header = ({ pageName }: HeaderProps) => {
   return (
-    <div className="bg-darkYellow rounded-b-4xl w-full pt-4 px-4 pb-25 z-0 relative">
+    <div className="bg-darkYellow rounded-b-4xl w-full pt-4 px-4 pb-25 z-0 relative h-fit">
       <Image
         src={LogoColor}
         width={130}

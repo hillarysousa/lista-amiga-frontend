@@ -3,22 +3,12 @@ import { useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { UAParser } from "my-ua-parser";
-import { useCreateUser } from "./hooks";
 import Logo from "./assets/svg/logo_white.svg";
-import { onAuthStateChanged, signInWithPopup } from "firebase/auth";
-import { auth, provider } from "../../firebase-config";
-import { useMutation } from "@tanstack/react-query";
+import { useAuth } from "./providers/AuthProvider";
 
 export default function Home() {
-  const { mutate } = useMutation({
-    mutationFn: useCreateUser,
-    onSuccess: () => {
-      router.push("/dashboard");
-    },
-    onError: (error) => {
-      console.log("Erro ao criar usuário:", error);
-    },
-  });
+  const { login } = useAuth();
+
   const userAgent = new UAParser();
   const isDeviceNotMobile = userAgent.getDevice().type !== "mobile";
   const router = useRouter();
@@ -32,28 +22,10 @@ export default function Home() {
   });
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        const token = await user.getIdToken();
-        mutate(token);
-      }
-    });
-
-    return () => unsubscribe();
-  }, [mutate]);
-
-  const handleLogin = async () => {
-    try {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      if (user) {
-        const token = await user.getIdToken();
-        mutate(token);
-      }
-    } catch (error) {
-      console.error("Erro no login com popup:", error);
+    if (localStorage.getItem("accessToken")) {
+      router.push("/dashboard");
     }
-  };
+  });
 
   return (
     <div className="grid justify-items-center min-h-screen h-screen pb-2 bg-lightYellow bg-[url(./assets/img/pattern.png)] content-between">
@@ -66,7 +38,7 @@ export default function Home() {
           priority
         />
         <a
-          onClick={handleLogin}
+          onClick={login}
           className="flex items-center border border-gray-600 rounded-lg shadow-sm bg-white hover:shadow-md transition px-4 h-12"
         >
           <div className="w-5 h-5 mr-3 flex items-center justify-center">

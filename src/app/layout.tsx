@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Fira_Sans } from "next/font/google";
 import "./globals.css";
-import Providers from "./providers";
+import QueryClientProvider from "./providers/QueryClientProvider";
+import { AuthProvider } from "./providers/AuthProvider";
 
 const firaSans = Fira_Sans({
   weight: ["400", "600", "700"],
@@ -28,7 +29,9 @@ export default function RootLayout({
   return (
     <html lang="pt">
       <body className={`${firaSans.className} antialiased`}>
-        <Providers>{children}</Providers>
+        <QueryClientProvider>
+          <AuthProvider>{children}</AuthProvider>
+        </QueryClientProvider>
       </body>
     </html>
   );
