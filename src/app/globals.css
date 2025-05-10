@@ -14,6 +14,8 @@
   --color-darkText: #222222;
   --color-grayBG: #EEEDEA;
   --color-grayIcon: #B8B8B8;
+  --color-borderEnabled: #999999;
+  --color-borderDisabled: #DDDDDD;
   --shadow-card: 0px 1px 4px 0px #1A0C0C0D, 0px 1px 4px 0px #0D0C0C0D;
 }
 

@@ -1,16 +1,19 @@
-import { getRandomColor } from "@/app/utils/colors";
-
 interface ParticipantsLettersProps {
   letter: string;
+  label: string;
+  color: string;
 }
 
-export const ParticipantsLetters = ({ letter }: ParticipantsLettersProps) => {
-  const color = `#${getRandomColor()}`;
+export const ParticipantsLetters = ({
+  letter,
+  label,
+  color,
+}: ParticipantsLettersProps) => {
   return (
     <div
-      className={`bg-${[
-        getRandomColor(),
-      ]} p-4 text-white font-bold rounded-full flex w-[30px] h-[30px] justify-center items-center mr-1`}
+      aria-label={label}
+      aria-details="Participante"
+      className={`size-[inherit] text-white font-bold rounded-full flex justify-center items-center mr-1`}
       style={{ backgroundColor: color }}
     >
       {letter}
