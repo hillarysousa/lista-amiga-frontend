@@ -6,8 +6,8 @@ import Header from "../components/header";
 
 const pageTitles = {
   dashboard: "Listas",
-  list: "Suas listas",
-  item: "Seus itens",
+  lists: "Suas listas",
+  items: "Seus itens",
 };
 
 export default function InternalLayout({
@@ -23,6 +23,8 @@ export default function InternalLayout({
       (title) => title[0] === path.split("/")[1]
     );
 
+    console.log(currentPage);
+
     return currentPage?.[1] ?? "Listas";
   };
 
@@ -35,8 +37,8 @@ export default function InternalLayout({
   return (
     <section className="bg-grayBG h-screen flex relative">
       <Header pageName={setPageTitle(pathname)} />
-      <div className="px-4 z-10 absolute top-46 w-full">{children}</div>
-      <Menu isSelected={isSelected} />
+      <div className="px-4 z-0 absolute top-46 w-full">{children}</div>
+      <Menu isSelected={isSelected} shouldCreateList={true} />
     </section>
   );
 }
