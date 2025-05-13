@@ -33,9 +33,6 @@ export const ListCard = ({
           <div aria-label="Participantes da lista" className="mb-9">
             {participants.map((participant: User) => {
               const participantColor = getRandomColor();
-              // if (participant.uid === user?.uid) {
-              //   setUserColor(participantColor);
-              // }
               return (
                 <div className="size-8" key={participant.uid}>
                   <ParticipantsLetters
