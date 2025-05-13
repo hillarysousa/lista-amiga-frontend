@@ -12,35 +12,39 @@ interface MenuProps {
 
 const Menu = ({ isSelected }: MenuProps) => {
   return (
-    <div className="fixed bottom-0 left-0 flex w-full h-19 items-end">
+    <div
+      aria-label="Menu"
+      aria-roledescription="Menu"
+      className="fixed bottom-0 left-0 flex w-full h-19 items-end"
+    >
       <div className="bg-white w-100 h-13 flex justify-between items-center flex-row flex-nowrap px-4">
-        <Link href="/dashboard" className="p-4">
+        <Link aria-label="Dashboard" href="/dashboard" className="p-4">
           <IconHome
             className={
               isSelected === "/dashboard" ? "text-darkBlue" : "text-grayIcon"
             }
           />
         </Link>
-        <Link href="/list" className="p-4">
+        <Link aria-label="Listas" href="/lists" className="p-4">
           <IconLists
             className={
-              isSelected === "/list" ? "text-darkBlue" : "text-grayIcon"
+              isSelected?.includes("/lists") ? "text-darkBlue" : "text-grayIcon"
             }
           />
         </Link>
-        <Link href="/dashboard" className="block -mt-6">
+        <Link aria-label="Criar novo" href="/dashboard" className="block -mt-6">
           <div className="rounded-full border-8 border-white bg-darkYellow p-4">
             <IconPlus className="text-darkBlue" />
           </div>
         </Link>
-        <Link href="/item" className="p-4">
+        <Link aria-label="Itens" href="/items" className="p-4">
           <IconItems
             className={
-              isSelected === "/item" ? "text-darkBlue" : "text-grayIcon"
+              isSelected?.includes("/items") ? "text-darkBlue" : "text-grayIcon"
             }
           />
         </Link>
-        <Link href="/logout" className="p-4">
+        <Link aria-label="Fazer logout" href="/logout" className="p-4">
           <IconItems
             className={isSelected ? "text-darkBlue" : "text-grayIcon"}
           />
