@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Menu from "../components/menu";
 import Header from "../components/header";
+import { PopoverTypes } from "../utils/popoverTypes";
 
 const pageTitles = {
   dashboard: "Listas",
@@ -35,10 +36,10 @@ export default function InternalLayout({
   }, [isSelected, pathname]);
 
   return (
-    <section className="bg-grayBG h-screen flex relative">
+    <section className="bg-grayBG min-h-screen h-full flex relative">
       <Header pageName={setPageTitle(pathname)} />
-      <div className="px-4 z-0 absolute top-46 w-full">{children}</div>
-      <Menu isSelected={isSelected} shouldCreateList={true} />
+      <div className="px-4 pb-17 absolute top-46 w-full h-fit">{children}</div>
+      <Menu isSelected={isSelected} popoverType={PopoverTypes.CREATE_LIST} />
     </section>
   );
 }

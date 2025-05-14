@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { useAuth } from "../providers/AuthProvider";
 
 const fetchSharedLists = async (userId: string, token: string) => {
   const response = await fetch(
@@ -19,18 +20,16 @@ const fetchSharedLists = async (userId: string, token: string) => {
   return data;
 };
 
-export const useGetSharedLists = (
-  userId: string | undefined,
-  token: string | null
-) => {
+export const useGetSharedLists = () => {
+  const { user, token } = useAuth();
   return useQuery({
-    queryKey: ["getSharedLists", userId],
-    enabled: !!userId && !!token,
+    queryKey: ["getSharedLists", user?.uid],
+    enabled: !!user?.uid && !!token,
     queryFn: async () => {
-      if (!userId || !token) {
+      if (!user || !token) {
         return [];
       }
-      return await fetchSharedLists(userId, token);
+      return await fetchSharedLists(user.uid, token);
     },
   });
 };

@@ -1,5 +1,6 @@
 "use client";
 
+import { PopoverTypes } from "@/app/utils/popoverTypes";
 import {
   useRef,
   useState,
@@ -7,18 +8,31 @@ import {
   useEffect,
   forwardRef,
 } from "react";
+import { CreateItem } from "./variants/createItem";
+import { CreateList } from "./variants/createList";
+import { ViewItem } from "./variants/viewItem";
+import { ViewUser } from "./variants/viewUser";
+import { ViewItemList } from "./variants/viewItemList";
 
 export type PopoverHandle = {
   open: (param?: string) => void;
   close: () => void;
 };
 
-type PopoverProps = {
-  children: React.ReactNode;
+const popoverVariantMap = {
+  [PopoverTypes.CREATE_ITEM]: CreateItem,
+  [PopoverTypes.CREATE_LIST]: CreateList,
+  [PopoverTypes.VIEW_ITEM]: ViewItem,
+  [PopoverTypes.VIEW_USER]: ViewUser,
+  [PopoverTypes.VIEW_ITEM_LIST]: ViewItemList,
 };
 
+interface PopoverProps {
+  variant: PopoverTypes;
+}
+
 export const Popover = forwardRef<PopoverHandle, PopoverProps>(
-  ({ children }, ref) => {
+  ({ variant = PopoverTypes.CREATE_LIST }, ref) => {
     const [isOpen, setIsOpen] = useState(false);
     const [isDragging, setIsDragging] = useState(false);
     const [translateY, setTranslateY] = useState(0);
@@ -32,8 +46,17 @@ export const Popover = forwardRef<PopoverHandle, PopoverProps>(
         setTranslateY(0);
         setIsOpen(true);
       },
-      close: () => setIsOpen(false),
+      close: () => {
+        setIsOpen(false);
+      },
     }));
+
+    const renderVariantChild = (type: PopoverTypes) => {
+      const Component = popoverVariantMap[type];
+
+      return <Component displayPopover={setIsOpen} />;
+    };
+
     useEffect(() => {
       if (!isOpen) return;
 
@@ -97,7 +120,7 @@ export const Popover = forwardRef<PopoverHandle, PopoverProps>(
     if (!isOpen) return null;
 
     return (
-      <div className="fixed inset-0 z-50 flex justify-center">
+      <div className="fixed inset-0 z-500 flex justify-center">
         <div className="absolute inset-0 bg-black/50 pointer-events-auto" />
 
         <div
@@ -111,7 +134,9 @@ export const Popover = forwardRef<PopoverHandle, PopoverProps>(
         >
           <div className="px-4 pt-2 pb-6 bg-white shadow-md rounded-t-xl w-screen text-center h-1/4 flex flex-col">
             <hr className="pb-8 border-t-3 w-16 self-center border-t-darkText" />
-            {children}
+            <div className="self-start w-full h-full">
+              {renderVariantChild(variant)}
+            </div>
           </div>
         </div>
       </div>

@@ -33,7 +33,7 @@
 }
 
 body {
-  background: var(--background);
+  background: var(--color-grayBG);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }

@@ -1,0 +1,7 @@
+export enum PopoverTypes {
+  CREATE_LIST = "CREATE_LIST",
+  CREATE_ITEM = "CREATE_ITEM",
+  VIEW_ITEM = "VIEW_ITEM",
+  VIEW_USER = "VIEW_USER",
+  VIEW_ITEM_LIST = "VIEW_ITEM_LIST",
+}

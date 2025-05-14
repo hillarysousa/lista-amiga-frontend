@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { useAuth } from "../providers/AuthProvider";
 
 const fetchOwnLists = async (userId: string, token: string) => {
   const response = await fetch(
@@ -19,18 +20,16 @@ const fetchOwnLists = async (userId: string, token: string) => {
   return data;
 };
 
-export const useGetOwnLists = (
-  userId: string | undefined,
-  token: string | null
-) => {
+export const useGetOwnLists = () => {
+  const { token, user } = useAuth();
   return useQuery({
-    queryKey: ["getOwnLists", userId],
-    enabled: !!userId && !!token,
+    queryKey: ["getOwnLists", user?.uid],
+    enabled: !!user?.uid && !!token,
     queryFn: async () => {
-      if (!userId || !token) {
+      if (!user || !token) {
         return [];
       }
-      return await fetchOwnLists(userId, token);
+      return await fetchOwnLists(user.uid, token);
     },
   });
 };
