@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { useAuth } from "../providers/AuthProvider";
 
 const fetchListDetails = async (listId: string, token: string) => {
   const response = await fetch(
@@ -19,10 +20,8 @@ const fetchListDetails = async (listId: string, token: string) => {
   return data;
 };
 
-export const useGetListDetails = (
-  listId: string | undefined,
-  token: string | null
-) => {
+export const useGetListDetails = (listId: string | undefined) => {
+  const { token } = useAuth();
   return useQuery({
     queryKey: ["getlistDetails", listId],
     enabled: !!listId && !!token,
