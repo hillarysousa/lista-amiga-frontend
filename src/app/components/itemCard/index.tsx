@@ -21,7 +21,6 @@ export const ItemCard = ({
   assignedUser,
   checked,
 }: ItemCardProps) => {
-  console.log(assignedUser, checked);
   return (
     <Link href={`/items/${itemId}`}>
       <div
