@@ -19,7 +19,6 @@ export const CreateList = ({ displayPopover }: CreateListProps) => {
     });
   };
 
-  console.log(isPending, "isPending >>>>");
   return (
     <div className="flex flex-col w-full h-full justify-between items-start">
       <div>

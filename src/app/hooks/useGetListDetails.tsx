@@ -17,6 +17,7 @@ const fetchListDetails = async (listId: string, token: string) => {
     throw new Error("Falha ao carregar os detalhes da lista");
   }
   const data = await response.json();
+
   return data;
 };
 
