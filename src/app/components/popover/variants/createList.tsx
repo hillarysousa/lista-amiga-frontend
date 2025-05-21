@@ -5,6 +5,7 @@ import IconLoading from "@/app/assets/svg/icon-loading";
 
 interface CreateListProps {
   displayPopover: Dispatch<SetStateAction<boolean>>;
+  propData?: object | null;
 }
 
 export const CreateList = ({ displayPopover }: CreateListProps) => {
@@ -30,7 +31,7 @@ export const CreateList = ({ displayPopover }: CreateListProps) => {
           placeholder="Nome da lista"
           type="text"
           onChange={(e) => setListName(e.target.value)}
-        ></input>
+        />
       </div>
       <button
         onClick={handleClick}

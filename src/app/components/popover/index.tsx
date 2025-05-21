@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { PopoverTypes } from "@/app/utils/popoverTypes";
@@ -15,7 +16,7 @@ import { ViewUser } from "./variants/viewUser";
 import { ViewItemList } from "./variants/viewItemList";
 
 export type PopoverHandle = {
-  open: (param?: string) => void;
+  open: (param?: any) => void;
   close: () => void;
 };
 
@@ -34,6 +35,7 @@ interface PopoverProps {
 export const Popover = forwardRef<PopoverHandle, PopoverProps>(
   ({ variant = PopoverTypes.CREATE_LIST }, ref) => {
     const [isOpen, setIsOpen] = useState(false);
+    const [propData, setPropData] = useState<object | null>(null);
     const [isDragging, setIsDragging] = useState(false);
     const [translateY, setTranslateY] = useState(0);
 
@@ -42,7 +44,7 @@ export const Popover = forwardRef<PopoverHandle, PopoverProps>(
 
     useImperativeHandle(ref, () => ({
       open: (param) => {
-        console.log(param);
+        setPropData(param);
         setTranslateY(0);
         setIsOpen(true);
       },
@@ -54,7 +56,7 @@ export const Popover = forwardRef<PopoverHandle, PopoverProps>(
     const renderVariantChild = (type: PopoverTypes) => {
       const Component = popoverVariantMap[type];
 
-      return <Component displayPopover={setIsOpen} />;
+      return <Component displayPopover={setIsOpen} propData={propData} />;
     };
 
     useEffect(() => {

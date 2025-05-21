@@ -1,16 +1,21 @@
 import { User } from "@/app/types/user";
 import { ParticipantsLetters } from "../participantsLetters";
-import Link from "next/link";
 import { RadioCheck } from "../RadioCheck";
 import { getParticipantsFirstLetters } from "@/app/utils/users";
+import { useRef } from "react";
+import { Popover, PopoverHandle } from "../popover";
+import { PopoverTypes } from "@/app/utils/popoverTypes";
+import { useAuth } from "@/app/providers/AuthProvider";
+import { getRandomColor } from "@/app/utils/colors";
 
 interface ItemCardProps {
   userId: string;
   itemId: string;
   name: string;
-  listName: string;
+  listName?: string;
   assignedUser: User | null;
   checked: boolean;
+  createdAt?: Date;
 }
 
 export const ItemCard = ({
@@ -20,38 +25,61 @@ export const ItemCard = ({
   listName,
   assignedUser,
   checked,
+  createdAt,
 }: ItemCardProps) => {
+  const popoverRef = useRef<PopoverHandle>(null);
+  const { user } = useAuth();
+  const participantColor = getRandomColor();
   return (
-    <Link href={`/items/${itemId}`}>
-      <div
-        aria-label={`Item ${name}`}
-        className="bg-white rounded-xl flex w-full p-4 mb-3 flex-row shadow-(--shadow-card) justify-between"
+    <>
+      <a
+        onClick={() =>
+          popoverRef.current?.open({
+            assignedUser,
+            name,
+            checked,
+            createdAt,
+            itemId,
+          })
+        }
       >
-        <div className="flex flex-row">
-          <RadioCheck
-            checked={checked}
-            ownedByUser={assignedUser?.uid === userId}
-          />
-          <div className="flex flex-col ml-2">
-            <h4
-              aria-label="Nome do item"
-              className="text-darkText text-base leading-[21px] mb-3 font-normal"
-            >
-              {name}
-            </h4>
-            <p className="text-darkText text-xs">{listName}</p>
-          </div>
-        </div>
-        {assignedUser?.uid && (
-          <div className="size-6 relative">
-            <ParticipantsLetters
-              color="var(--color-lightBlue)"
-              letter={getParticipantsFirstLetters(assignedUser?.name)}
-              label={name}
+        <div
+          aria-label={`Item ${name}`}
+          className="bg-white rounded-xl flex w-full p-4 mb-3 flex-row shadow-(--shadow-card) justify-between"
+        >
+          <div className="flex flex-row">
+            <RadioCheck
+              checked={checked}
+              ownedByUser={assignedUser?.uid === userId}
             />
+            <div className="flex flex-col ml-2">
+              <h4
+                aria-label="Nome do item"
+                className={`text-darkText text-base leading-[21px] font-normal`}
+              >
+                {name}
+              </h4>
+              {listName && (
+                <p className="text-darkText text-xs mt-3">{listName}</p>
+              )}
+            </div>
           </div>
-        )}
-      </div>
-    </Link>
+          {assignedUser?.uid && (
+            <div className="size-6 relative">
+              <ParticipantsLetters
+                color={
+                  assignedUser.uid === user?.uid
+                    ? "var(--color-lightBlue)"
+                    : `#${participantColor}`
+                }
+                letter={getParticipantsFirstLetters(assignedUser?.name)}
+                label={name}
+              />
+            </div>
+          )}
+        </div>
+      </a>
+      <Popover ref={popoverRef} variant={PopoverTypes.VIEW_ITEM} />
+    </>
   );
 };

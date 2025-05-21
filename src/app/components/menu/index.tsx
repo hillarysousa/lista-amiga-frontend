@@ -8,6 +8,11 @@ import IconPlus from "../../assets/svg/icon-plus";
 import { useRef } from "react";
 import { Popover, PopoverHandle } from "../popover";
 import { PopoverTypes } from "@/app/utils/popoverTypes";
+import { Modal, ModalHandle } from "../modal";
+import { ModalTypes } from "@/app/utils/modalTypes";
+import { ParticipantsLetters } from "../participantsLetters";
+import { getParticipantsFirstLetters } from "@/app/utils/users";
+import { useAuth } from "@/app/providers/AuthProvider";
 
 interface MenuProps {
   isSelected: string | null;
@@ -15,7 +20,9 @@ interface MenuProps {
 }
 
 const Menu = ({ isSelected, popoverType }: MenuProps) => {
+  const { user } = useAuth();
   const popoverRef = useRef<PopoverHandle>(null);
+  const modalRef = useRef<ModalHandle>(null);
   return (
     <>
       <div
@@ -42,7 +49,7 @@ const Menu = ({ isSelected, popoverType }: MenuProps) => {
           </Link>
           <a
             aria-label="Criar novo"
-            onClick={() => popoverRef.current?.open("batata!")}
+            onClick={() => popoverRef.current?.open()}
             className="block -mt-6"
           >
             <div className="rounded-full border-8 border-white bg-darkYellow p-4">
@@ -58,15 +65,27 @@ const Menu = ({ isSelected, popoverType }: MenuProps) => {
               }
             />
           </Link>
-          <Link aria-label="Fazer logout" href="/logout" className="p-4">
-            <IconItems
-              className={isSelected ? "text-darkBlue" : "text-grayIcon"}
-            />
-          </Link>
+          <a
+            aria-label="Fazer logout"
+            onClick={() => modalRef.current?.open()}
+            className="p-4"
+          >
+            <div className="size-6 relative">
+              {user && (
+                <ParticipantsLetters
+                  color="var(--color-lightBlue)"
+                  letter={getParticipantsFirstLetters(user.name)}
+                  label={user.name}
+                />
+              )}
+            </div>
+          </a>
         </div>
       </div>
 
       <Popover ref={popoverRef} variant={popoverType} />
+
+      <Modal ref={modalRef} variant={ModalTypes.LOGOUT} />
     </>
   );
 };

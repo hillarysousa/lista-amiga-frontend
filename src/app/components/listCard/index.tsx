@@ -4,6 +4,7 @@ import Link from "next/link";
 import { getRandomColor } from "@/app/utils/colors";
 import { useAuth } from "@/app/providers/AuthProvider";
 import { getParticipantsFirstLetters } from "@/app/utils/users";
+import { formattedDate } from "@/app/utils/date";
 
 interface ListCardProps {
   listId: string;
@@ -20,7 +21,6 @@ export const ListCard = ({
   createdDate,
   itemQuantity,
 }: ListCardProps) => {
-  const formattedDate = new Date(createdDate).toLocaleDateString("pt-BR");
   const { user } = useAuth();
   return (
     <Link href={`/lists/${listId}`}>
@@ -59,7 +59,7 @@ export const ListCard = ({
         )}
         <div className="flex w-full flex-row justify-between">
           <p aria-label="Data de criação" className="text-darkText text-xs">
-            {formattedDate}
+            {formattedDate(createdDate)}
           </p>
           <p aria-label="Quantidade de itens" className="text-darkText text-xs">
             {itemQuantity < 2

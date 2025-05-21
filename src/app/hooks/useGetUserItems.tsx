@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { useAuth } from "../providers/AuthProvider";
 
 const fetchUserItems = async (userId: string, token: string) => {
   const response = await fetch(
@@ -18,18 +19,16 @@ const fetchUserItems = async (userId: string, token: string) => {
   return data;
 };
 
-export const useGetUserItems = (
-  userId: string | undefined,
-  token: string | null
-) => {
+export const useGetUserItems = () => {
+  const { token, user } = useAuth();
   return useQuery({
-    queryKey: ["getUserItems"],
-    enabled: !!userId || !!token,
+    queryKey: ["getUserItems", user?.uid],
+    enabled: !!user?.uid || !!token,
     queryFn: async () => {
-      if (!userId || !token) {
+      if (!user?.uid || !token) {
         return [];
       }
-      return await fetchUserItems(userId, token);
+      return await fetchUserItems(user.uid, token);
     },
   });
 };

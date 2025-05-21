@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import Menu from "@/app/components/menu";
 import Header from "@/app/components/header";
 import { PopoverTypes } from "@/app/utils/popoverTypes";
-import { ListTitleProvider } from "@/app/providers/ListTitleProvider";
+import { ListDetailsProvider } from "@/app/providers/ListDetailsProvider";
 
 const pageTitles = {
   dashboard: "Listas",
@@ -29,6 +29,8 @@ export default function ListDetailsLayout({
     return currentPage?.[1] ?? "Listas";
   };
 
+  const isListPage = pathnameArray.length === 3;
+
   useEffect(() => {
     if (pathname !== isSelected) {
       setIsSelected(pathname);
@@ -36,18 +38,26 @@ export default function ListDetailsLayout({
   }, [isSelected, pathname]);
 
   return (
-    <ListTitleProvider
-      listId={pathnameArray.length > 2 ? pathnameArray[2] : undefined}
-    >
+    <ListDetailsProvider listId={isListPage ? pathnameArray[2] : undefined}>
       <section className="bg-grayBG min-h-screen h-full flex relative">
         <Header
-          pageName={pathnameArray.length < 2 ? setPageTitle(pathname) : null}
+          pageName={!isListPage ? setPageTitle(pathname) : null}
+          isListPage={isListPage}
         />
-        <div className="px-4 pb-17 absolute top-46 w-full h-fit">
+        <div
+          className={`px-4 pb-17 absolute ${
+            isListPage ? "top-55" : "top-46"
+          } w-full h-fit`}
+        >
           {children}
         </div>
-        <Menu isSelected={isSelected} popoverType={PopoverTypes.CREATE_LIST} />
+        <Menu
+          isSelected={isSelected}
+          popoverType={
+            isListPage ? PopoverTypes.CREATE_ITEM : PopoverTypes.CREATE_LIST
+          }
+        />
       </section>
-    </ListTitleProvider>
+    </ListDetailsProvider>
   );
 }

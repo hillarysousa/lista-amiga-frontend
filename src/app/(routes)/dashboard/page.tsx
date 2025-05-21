@@ -16,13 +16,13 @@ export default function Dashboard() {
     data: userLists,
     isLoading: loadingLists,
     error: errorLists,
-  } = useGetUserLists(user?.uid, token!);
+  } = useGetUserLists();
 
   const {
     data: userItems,
     isLoading: loadingItems,
     error: errorItems,
-  } = useGetUserItems(user?.uid, token!);
+  } = useGetUserItems();
 
   if (!user || !token) {
     return <div>Carregando...</div>;
@@ -68,12 +68,13 @@ export default function Dashboard() {
             return (
               <ItemCard
                 userId={user.uid}
-                key={item.id}
                 itemId={item.id}
+                key={item.id}
                 name={item.name}
                 listName={item.list.name}
                 assignedUser={item.owner}
                 checked={item.checked}
+                createdAt={item.createdAt}
               />
             );
           })}
