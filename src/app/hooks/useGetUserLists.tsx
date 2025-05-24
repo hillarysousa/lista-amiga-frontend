@@ -18,7 +18,6 @@ const fetchUserLists = async (userId: string, token: string) => {
   }
 
   const data = await response.json();
-  console.log(data);
   return data;
 };
 

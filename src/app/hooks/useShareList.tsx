@@ -18,7 +18,6 @@ const postShareList = async (listId: string, token: string) => {
   }
 
   const data = await response.json();
-  console.log("RESPONSE JSON >>>", data);
   return data;
 };
 
