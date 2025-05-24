@@ -30,7 +30,7 @@ const Menu = ({ isSelected, popoverType }: MenuProps) => {
         aria-roledescription="Menu"
         className="fixed bottom-0 left-0 flex w-full h-19 items-end"
       >
-        <div className="bg-white w-100 h-13 flex justify-between items-center flex-row flex-nowrap px-4">
+        <div className="bg-white w-100 h-13 flex justify-between items-center flex-row flex-nowrap px-4 shadow-(--shadow-menu)">
           <Link aria-label="Dashboard" href="/dashboard" className="p-4">
             <IconHome
               className={
@@ -52,7 +52,7 @@ const Menu = ({ isSelected, popoverType }: MenuProps) => {
             onClick={() => popoverRef.current?.open()}
             className="block -mt-6"
           >
-            <div className="rounded-full border-8 border-white bg-darkYellow p-4">
+            <div className="rounded-full border-8 border-white bg-darkYellow p-4 shadow-(--shadow-add)">
               <IconPlus className="text-darkBlue" />
             </div>
           </a>
