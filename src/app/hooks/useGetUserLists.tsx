@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
+import { useAuth } from "../providers/AuthProvider";
 
 const fetchUserLists = async (userId: string, token: string) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/list/${userId}`,
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/list/user/${userId}`,
     {
       method: "GET",
       headers: {
@@ -15,22 +16,21 @@ const fetchUserLists = async (userId: string, token: string) => {
   if (!response.ok) {
     throw new Error("Falha ao carregar as listas");
   }
+
   const data = await response.json();
   return data;
 };
 
-export const useGetUserLists = (
-  userId: string | undefined,
-  token: string | null
-) => {
+export const useGetUserLists = () => {
+  const { token, user } = useAuth();
   return useQuery({
-    queryKey: ["getUserLists", userId],
-    enabled: !!userId && !!token,
+    queryKey: ["getUserLists", user?.uid],
+    enabled: !!user?.uid && !!token,
     queryFn: async () => {
-      if (!userId || !token) {
+      if (!user?.uid || !token) {
         return [];
       }
-      return await fetchUserLists(userId, token);
+      return await fetchUserLists(user.uid, token);
     },
   });
 };
