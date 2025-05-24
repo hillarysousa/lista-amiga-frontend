@@ -14,7 +14,7 @@ interface ViewItemProps {
   propData: any | null;
 }
 
-export const ViewItem = ({ propData }: ViewItemProps) => {
+export const ViewItem = ({ propData, displayPopover }: ViewItemProps) => {
   const { mutate: mutateSetItemOwner } = useSetItemOwner();
   const { mutate: mutateCheckItem } = useCheckItem();
   const { user } = useAuth();
@@ -23,6 +23,7 @@ export const ViewItem = ({ propData }: ViewItemProps) => {
 
   const handleAssignUser = () => {
     mutateSetItemOwner(itemId);
+    displayPopover(false);
   };
 
   const handleCheckItem = () => {
