@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { useCreateItem } from "@/app/hooks/useCreateItem";
 import IconCheck from "@/app/assets/svg/icon-check";
 import IconLoading from "@/app/assets/svg/icon-loading";
+import { useListDetails } from "@/app/providers/ListDetailsProvider";
 
 interface CreateItemProps {
   displayPopover: Dispatch<SetStateAction<boolean>>;
@@ -10,13 +11,18 @@ interface CreateItemProps {
 export const CreateItem = ({ displayPopover }: CreateItemProps) => {
   const [itemName, setItemName] = useState<string>("");
   const { mutate, isPending } = useCreateItem();
+  const { refetch, data } = useListDetails();
 
   const handleClick = () => {
-    mutate(itemName, {
-      onSuccess: () => {
-        displayPopover(false);
-      },
-    });
+    mutate(
+      { itemName, listId: data.id },
+      {
+        onSuccess: () => {
+          displayPopover(false);
+          refetch();
+        },
+      }
+    );
   };
 
   return (

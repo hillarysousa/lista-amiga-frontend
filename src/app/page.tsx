@@ -1,6 +1,7 @@
 "use client";
 import { useEffect } from "react";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { UAParser } from "my-ua-parser";
 import Logo from "./assets/svg/logo_white.svg";
@@ -8,6 +9,8 @@ import { useAuth } from "./providers/AuthProvider";
 
 export default function Home() {
   const { login } = useAuth();
+  const searchParams = useSearchParams();
+  const shareToken = searchParams.get("share");
 
   const userAgent = new UAParser();
   const isDeviceNotMobile = userAgent.getDevice().type !== "mobile";
@@ -23,7 +26,7 @@ export default function Home() {
 
   useEffect(() => {
     if (localStorage.getItem("accessToken")) {
-      router.push("/dashboard");
+      router.push(shareToken ? `/lists?share=${shareToken}` : "/dashboard");
     }
   });
 
