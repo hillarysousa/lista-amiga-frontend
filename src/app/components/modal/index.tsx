@@ -67,7 +67,7 @@ export const Modal = forwardRef<ModalHandle, ModalProps>(
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
         <div
           ref={containerRef}
-          className="bg-white rounded-xl shadow-lg w-full max-w-lg p-6"
+          className="bg-white rounded-xl shadow-lg w-3xs max-w-lg p-6"
         >
           {renderVariantChild(variant)}
         </div>

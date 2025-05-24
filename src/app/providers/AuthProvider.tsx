@@ -66,6 +66,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       console.error("Erro no login com popup:", error);
     }
   };
+
   const logout = () => {
     localStorage.removeItem("accessToken");
     setToken(null);

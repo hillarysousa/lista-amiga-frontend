@@ -17,6 +17,8 @@
   --color-borderEnabled: #999999;
   --color-borderDisabled: #DDDDDD;
   --shadow-card: 0px 1px 4px 0px #1A0C0C0D, 0px 1px 4px 0px #0D0C0C0D;
+  --shadow-menu: 0px -1px 4px 0px #260C0C0D, 0px -1px 4px 0px #1A0C0C0D;
+  --shadow-add: 0px -2px 3px 0px #1A0C0C0D, 0px -2px 3px 0px #1A0C0C0D;
 }
 
 @theme inline {
