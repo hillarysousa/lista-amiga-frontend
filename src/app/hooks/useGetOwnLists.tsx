@@ -25,7 +25,7 @@ export const useGetOwnLists = () => {
   return useQuery({
     queryKey: ["getOwnLists", user?.uid],
     enabled: !!user?.uid && !!token,
-    staleTime: 1000,
+    staleTime: Infinity,
     queryFn: async () => {
       if (!user || !token) {
         return [];

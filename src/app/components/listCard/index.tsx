@@ -1,10 +1,10 @@
-import { User } from "@/app/types/user";
-import { ParticipantsLetters } from "../participantsLetters";
 import Link from "next/link";
-import { getRandomColor } from "@/app/utils/colors";
 import { useAuth } from "@/app/providers/AuthProvider";
+import { User } from "@/app/types/user";
+import { getRandomColor } from "@/app/utils/colors";
 import { getParticipantsFirstLetters } from "@/app/utils/users";
 import { formattedDate } from "@/app/utils/date";
+import { ParticipantsLetters } from "../participantsLetters";
 
 interface ListCardProps {
   listId: string;

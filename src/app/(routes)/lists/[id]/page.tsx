@@ -1,24 +1,25 @@
 "use client";
+import { useRef } from "react";
 import { useAuth } from "@/app/providers/AuthProvider";
 import { useListDetails } from "@/app/providers/ListDetailsProvider";
 import { User } from "@/app/types/user";
-import { ParticipantsLetters } from "@/app/components/participantsLetters";
-import { getRandomColor } from "@/app/utils/colors";
-import { getParticipantsFirstLetters } from "@/app/utils/users";
 import { Item } from "@/app/types/item";
+import { ParticipantsLetters } from "@/app/components/participantsLetters";
 import { ItemCard } from "@/app/components/itemCard";
 import { Popover, PopoverHandle } from "@/app/components/popover";
-import { useRef } from "react";
-import { PopoverTypes } from "@/app/utils/popoverTypes";
 import { EmptyItemDashboard } from "@/app/components/emptyItemsDashboard";
+import { Loading } from "@/app/components/loadingFullScreen";
+import { getParticipantsFirstLetters } from "@/app/utils/users";
+import { getRandomColor } from "@/app/utils/colors";
+import { PopoverTypes } from "@/app/utils/popoverTypes";
 
 export default function ListDetails() {
-  const { data, isLoading } = useListDetails();
+  const { data, isLoading, refetch } = useListDetails();
   const { user } = useAuth();
   const popoverRef = useRef<PopoverHandle>(null);
 
-  if (isLoading) {
-    return "Carregando...";
+  if (isLoading || !user) {
+    return <Loading />;
   }
 
   return (
@@ -36,6 +37,7 @@ export default function ListDetails() {
                     participant,
                     participantColor,
                     listId: data.id,
+                    refetchListDetails: refetch,
                   })
                 }
               >
@@ -63,6 +65,8 @@ export default function ListDetails() {
                 assignedUser={item.owner}
                 checked={item.checked}
                 createdAt={item.createdAt}
+                refetchListDetails={refetch}
+                listOwner={data.owner}
               />
             );
           })

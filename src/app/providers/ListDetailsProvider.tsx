@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { createContext, useContext } from "react";
-import { useGetListDetails } from "@/app/hooks/useGetListDetails";
 import { QueryStatus } from "@tanstack/react-query";
+import { useGetListDetails } from "@/app/hooks/useGetListDetails";
 
 const ListDetailsContext = createContext<{
   data: any | null;

@@ -9,6 +9,7 @@ import { ListCard } from "@/app/components/listCard";
 import { ItemCard } from "@/app/components/itemCard";
 import { EmptyListDashboard } from "@/app/components/emptyListsDashboard";
 import { EmptyItemDashboard } from "@/app/components/emptyItemsDashboard";
+import { Loading } from "@/app/components/loadingFullScreen";
 
 export default function Dashboard() {
   const { token, user } = useAuth();
@@ -25,19 +26,22 @@ export default function Dashboard() {
   } = useGetUserItems();
 
   if (!user || !token) {
-    return <div>Carregando...</div>;
+    return <Loading />;
   }
 
   const unitedLists = (listData: List[]) => {
     return listData.flatMap((list: List) => list || []).slice(0, 2);
   };
 
-  if (loadingLists || loadingItems) return <div>Carregando as listas...</div>;
   if (errorLists || errorItems) return <div>Erro!</div>;
 
   return (
     <div className="w-full flex flex-col">
-      {unitedLists(userLists).length > 0 ? (
+      {loadingLists ? (
+        <div className="mb-9">
+          <Loading />
+        </div>
+      ) : unitedLists(userLists).length > 0 ? (
         <>
           {unitedLists(userLists).map((list: List) => {
             return (
@@ -62,7 +66,11 @@ export default function Dashboard() {
       )}
 
       <h1 className="text-darkBlue text-3xl font-bold mb-6">Itens</h1>
-      {userItems.length > 0 ? (
+      {loadingItems ? (
+        <div className="mb-9">
+          <Loading />
+        </div>
+      ) : userItems.length > 0 ? (
         <>
           {userItems.slice(0, 6).map((item: Item) => {
             return (

@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { ParticipantsLetters } from "../../participantsLetters";
 import { getParticipantsFirstLetters } from "@/app/utils/users";
 
@@ -11,20 +11,21 @@ interface ViewUserProps {
 }
 
 export const ViewUser = ({ displayPopover, propData }: ViewUserProps) => {
-  const { mutate, isPending, data } = useRemoveParticipant();
-  const { participantColor, participant, listId } = propData;
+  const { mutate } = useRemoveParticipant();
+  const { participantColor, participant, listId, refetchListDetails } =
+    propData;
 
   const handleClick = () => {
-    mutate({ listId, userId: participant.uid });
-    displayPopover(false);
+    mutate(
+      { listId, userId: participant.uid },
+      {
+        onSuccess: () => {
+          refetchListDetails();
+          displayPopover(false);
+        },
+      }
+    );
   };
-
-  console.log(isPending, "peding >>>");
-  console.log(data, "data >>>");
-
-  // useEffect(() => {
-  //   if(isPending &&)
-  // })
 
   return (
     <div className="flex flex-col w-full h-full items-start">

@@ -16,6 +16,8 @@ interface ItemCardProps {
   assignedUser: User | null;
   checked: boolean;
   createdAt?: Date;
+  listOwner?: User;
+  refetchListDetails?: () => void;
 }
 
 export const ItemCard = ({
@@ -26,6 +28,8 @@ export const ItemCard = ({
   assignedUser,
   checked,
   createdAt,
+  listOwner,
+  refetchListDetails,
 }: ItemCardProps) => {
   const popoverRef = useRef<PopoverHandle>(null);
   const { user } = useAuth();
@@ -40,6 +44,8 @@ export const ItemCard = ({
             checked,
             createdAt,
             itemId,
+            refetchListDetails,
+            listOwner,
           })
         }
       >

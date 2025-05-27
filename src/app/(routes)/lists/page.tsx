@@ -1,12 +1,13 @@
 "use client";
-import { EmptyListDashboard } from "@/app/components/emptyListsDashboard";
-import { ListCard } from "@/app/components/listCard";
+import { useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { useGetOwnLists } from "@/app/hooks/useGetOwnLists";
 import { useGetSharedLists } from "@/app/hooks/useGetSharedLists";
 import { useJoinList } from "@/app/hooks/useJoinList";
 import { List } from "@/app/types/list";
-import { useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { EmptyListDashboard } from "@/app/components/emptyListsDashboard";
+import { ListCard } from "@/app/components/listCard";
+import { Loading } from "@/app/components/loadingFullScreen";
 
 export default function Lists() {
   const searchParams = useSearchParams();
@@ -14,7 +15,6 @@ export default function Lists() {
   const {
     data: ownLists,
     isLoading: loadingOwnLists,
-    refetch: refetchOwnLists,
     error: errorOwnLists,
   } = useGetOwnLists();
 
@@ -29,18 +29,20 @@ export default function Lists() {
 
   useEffect(() => {
     if (shareToken) {
-      mutate(shareToken);
-      refetchSharedLists();
-      refetchOwnLists();
+      mutate(shareToken, {
+        onSuccess: () => {
+          refetchSharedLists();
+        },
+      });
     }
-  }, [mutate, refetchOwnLists, refetchSharedLists, shareToken]);
+  }, [mutate, refetchSharedLists, shareToken]);
 
   if (
     loadingSharedLists ||
     loadingOwnLists ||
     (shareToken && (isIdle || isPending))
   )
-    return <div>Carregando as listas...</div>;
+    return <Loading />;
 
   if (errorOwnLists || errorSharedLists) return <div>Erro!</div>;
 

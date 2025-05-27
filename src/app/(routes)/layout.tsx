@@ -1,10 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { ListDetailsProvider } from "@/app/providers/ListDetailsProvider";
 import Menu from "@/app/components/menu";
 import Header from "@/app/components/header";
 import { PopoverTypes } from "@/app/utils/popoverTypes";
-import { ListDetailsProvider } from "@/app/providers/ListDetailsProvider";
 
 const pageTitles = {
   dashboard: "Listas",

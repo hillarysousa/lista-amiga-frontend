@@ -1,8 +1,9 @@
 import Image from "next/image";
-import LogoColor from "../../assets/svg/logo_color.svg";
 import { useListDetails } from "@/app/providers/ListDetailsProvider";
+import LogoColor from "../../assets/svg/logo_color.svg";
 import { ShareButton } from "../shareButton";
 import { DeleteListButton } from "../deleteListButton";
+import { Loading } from "../loadingFullScreen";
 
 interface HeaderProps {
   pageName: string | null;
@@ -10,7 +11,7 @@ interface HeaderProps {
 }
 
 const Header = ({ pageName, isListPage }: HeaderProps) => {
-  const { data } = useListDetails();
+  const { data, isLoading, refetch } = useListDetails();
   return (
     <div className="bg-darkYellow rounded-b-4xl w-full pt-4 px-4 pb-25 z-0 relative h-fit">
       <Image
@@ -20,12 +21,22 @@ const Header = ({ pageName, isListPage }: HeaderProps) => {
         className="pb-9 pt-5"
       />
       <div className="flex flex-row">
-        <h1 className="text-darkBlue text-3xl font-bold w-full">
-          {pageName || data?.name}
-        </h1>
+        {isListPage ? (
+          isLoading ? (
+            <Loading small />
+          ) : (
+            <h1 className="text-darkBlue text-3xl font-bold w-full">
+              {data?.name}
+            </h1>
+          )
+        ) : (
+          <h1 className="text-darkBlue text-3xl font-bold w-full">
+            {pageName}
+          </h1>
+        )}
         {isListPage && (
           <div className="flex flex-col gap-3">
-            <ShareButton list={data} />
+            <ShareButton list={data} refetch={refetch} />
             <DeleteListButton listId={data?.id} />
           </div>
         )}

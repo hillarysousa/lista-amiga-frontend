@@ -2,12 +2,14 @@
 
 import IconShare from "@/app/assets/svg/icon-share";
 import { useShareList } from "@/app/hooks/useShareList";
+import { List } from "@/app/types/list";
 
 interface ShareButtonProps {
-  list: any;
+  list: List;
+  refetch: () => void;
 }
 
-export const ShareButton = ({ list }: ShareButtonProps) => {
+export const ShareButton = ({ list, refetch }: ShareButtonProps) => {
   const { mutate } = useShareList();
   const hasShareToken = list?.shareToken;
 
@@ -15,21 +17,23 @@ export const ShareButton = ({ list }: ShareButtonProps) => {
     const shareData = {
       title: "Teste",
       text: "Teste!!!!",
-      url: `http://localhost:3000?share=${token}`,
+      url: `http://localhost:4000?share=${token}`,
     };
 
     return navigator.share(shareData);
   };
 
   const handleClick = (id: string) => {
-    if (hasShareToken) {
-      return openShareWindow(id);
+    if (!hasShareToken) {
+      return mutate(id, {
+        onSuccess: (data) => {
+          refetch();
+          return openShareWindow(data.token);
+        },
+      });
     }
-    return mutate(id, {
-      onSuccess: (data) => {
-        return openShareWindow(data.token);
-      },
-    });
+
+    return openShareWindow(hasShareToken);
   };
 
   return (
