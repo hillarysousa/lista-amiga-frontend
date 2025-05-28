@@ -11,6 +11,7 @@ import { getRandomColor } from "@/app/utils/colors";
 interface ItemCardProps {
   userId: string;
   itemId: string;
+  listId?: string;
   name: string;
   listName?: string;
   assignedUser: User | null;
@@ -18,11 +19,13 @@ interface ItemCardProps {
   createdAt?: Date;
   listOwner?: User;
   refetchListDetails?: () => void;
+  isItemPage?: boolean;
 }
 
 export const ItemCard = ({
   userId,
   itemId,
+  listId,
   name,
   listName,
   assignedUser,
@@ -30,6 +33,7 @@ export const ItemCard = ({
   createdAt,
   listOwner,
   refetchListDetails,
+  isItemPage = false,
 }: ItemCardProps) => {
   const popoverRef = useRef<PopoverHandle>(null);
   const { user } = useAuth();
@@ -46,6 +50,8 @@ export const ItemCard = ({
             itemId,
             refetchListDetails,
             listOwner,
+            listName,
+            listId,
           })
         }
       >
@@ -85,7 +91,12 @@ export const ItemCard = ({
           )}
         </div>
       </a>
-      <Popover ref={popoverRef} variant={PopoverTypes.VIEW_ITEM} />
+      <Popover
+        ref={popoverRef}
+        variant={
+          isItemPage ? PopoverTypes.VIEW_ITEM_LIST : PopoverTypes.VIEW_ITEM
+        }
+      />
     </>
   );
 };

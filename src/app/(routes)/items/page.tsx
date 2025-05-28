@@ -27,12 +27,14 @@ export default function Items() {
               <ItemCard
                 userId={user.uid}
                 itemId={item.id}
+                listId={item.list.id}
                 key={item.id}
                 name={item.name}
                 listName={item.list.name}
                 assignedUser={item.owner}
                 checked={item.checked}
                 createdAt={item.createdAt}
+                isItemPage
               />
             );
           })}

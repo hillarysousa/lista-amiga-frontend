@@ -1,6 +1,6 @@
 "use client";
 import { useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useGetOwnLists } from "@/app/hooks/useGetOwnLists";
 import { useGetSharedLists } from "@/app/hooks/useGetSharedLists";
 import { useJoinList } from "@/app/hooks/useJoinList";
@@ -11,6 +11,7 @@ import { Loading } from "@/app/components/loadingFullScreen";
 
 export default function Lists() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const shareToken = searchParams.get("share");
   const {
     data: ownLists,
@@ -31,11 +32,14 @@ export default function Lists() {
     if (shareToken) {
       mutate(shareToken, {
         onSuccess: () => {
+          const newParams = new URLSearchParams(searchParams.toString());
+          newParams.delete("share");
+          router.replace(`?${newParams.toString()}`, { scroll: false });
           refetchSharedLists();
         },
       });
     }
-  }, [mutate, refetchSharedLists, shareToken]);
+  }, [mutate, refetchSharedLists, router, searchParams, shareToken]);
 
   if (
     loadingSharedLists ||

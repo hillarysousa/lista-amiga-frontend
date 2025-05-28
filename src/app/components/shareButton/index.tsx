@@ -15,8 +15,8 @@ export const ShareButton = ({ list, refetch }: ShareButtonProps) => {
 
   const openShareWindow = (token: string) => {
     const shareData = {
-      title: "Teste",
-      text: "Teste!!!!",
+      title: "Lista Amiga",
+      text: `Oi! Quero compartilhar a lista ${list.name} com você 😊`,
       url: `http://localhost:4000?share=${token}`,
     };
 
@@ -32,7 +32,6 @@ export const ShareButton = ({ list, refetch }: ShareButtonProps) => {
         },
       });
     }
-
     return openShareWindow(hasShareToken);
   };
 

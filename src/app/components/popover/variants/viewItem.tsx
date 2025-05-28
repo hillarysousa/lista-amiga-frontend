@@ -58,17 +58,15 @@ export const ViewItem = ({ propData, displayPopover }: ViewItemProps) => {
   };
 
   const handleUnassignUser = () => {
-    if (assignedUser?.uid === user?.uid || listOwner?.uid === user?.uid) {
-      return mutateRemoveItemOwner(
-        { itemId, userId: assignedUser.uid },
-        {
-          onSuccess: () => {
-            refetchListDetails();
-            displayPopover(false);
-          },
-        }
-      );
-    }
+    mutateRemoveItemOwner(
+      { itemId, userId: assignedUser.uid },
+      {
+        onSuccess: () => {
+          refetchListDetails();
+          displayPopover(false);
+        },
+      }
+    );
   };
 
   const handleDeleteItem = () => {
@@ -79,6 +77,9 @@ export const ViewItem = ({ propData, displayPopover }: ViewItemProps) => {
       },
     });
   };
+
+  const isOwnedOrAssignedByUser =
+    assignedUser?.uid === user?.uid || listOwner.uid === user?.uid;
 
   return (
     <div className="flex flex-col w-full h-full justify-between items-start">
@@ -108,15 +109,17 @@ export const ViewItem = ({ propData, displayPopover }: ViewItemProps) => {
                 />
               </div>
               {assignedUser.name}
-              <a
-                onClick={handleUnassignUser}
-                className="flex flex-row text-sm text-neutral-400 font-normal items-center ml-3 leading-[15px]"
-              >
-                <div className="rounded-full bg-lightYellow w-4 h-4 justify-center items-center flex mr-1">
-                  <IconMinus className="text-darkBlue" />
-                </div>
-                Remover
-              </a>
+              {isOwnedOrAssignedByUser && (
+                <a
+                  onClick={handleUnassignUser}
+                  className="flex flex-row text-sm text-neutral-400 font-normal items-center ml-3 leading-[15px]"
+                >
+                  <div className="rounded-full bg-lightYellow w-4 h-4 justify-center items-center flex mr-1">
+                    <IconMinus className="text-darkBlue" />
+                  </div>
+                  Remover
+                </a>
+              )}
             </div>
           ) : (
             <a
