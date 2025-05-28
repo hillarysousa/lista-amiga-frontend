@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Dispatch, SetStateAction } from "react";
 import { ParticipantsLetters } from "../../participantsLetters";
 import { getParticipantsFirstLetters } from "@/app/utils/users";
