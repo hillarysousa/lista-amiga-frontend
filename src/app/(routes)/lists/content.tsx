@@ -89,7 +89,7 @@ export function ListsContent() {
           ))}
         </div>
       ) : (
-        <div className="mb-9">
+        <div className="mb-12">
           <EmptyListDashboard />
         </div>
       )}
