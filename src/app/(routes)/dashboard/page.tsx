@@ -71,7 +71,7 @@ export default function Dashboard() {
           <Loading />
         </div>
       ) : userItems.length > 0 ? (
-        <div className="mb-4">
+        <>
           {userItems.slice(0, 6).map((item: Item) => {
             return (
               <ItemCard
@@ -86,12 +86,12 @@ export default function Dashboard() {
               />
             );
           })}
-          <Link href="/items" className="flex self-end-safe mb-9">
+          <Link href="/items" className="flex self-end-safe mb-10">
             <p className="text-darkBlue font-semibold uppercase text-base flex">
               Ver mais
             </p>
           </Link>
-        </div>
+        </>
       ) : (
         <div className="mb-4">
           <EmptyItemDashboard />

@@ -76,7 +76,7 @@ export function ListsContent() {
       </h1>
 
       {sharedLists && sharedLists.length > 0 ? (
-        <div className="mb-4">
+        <div className="mb-6">
           {sharedLists.map((list: List) => (
             <ListCard
               key={list.id}
@@ -89,7 +89,7 @@ export function ListsContent() {
           ))}
         </div>
       ) : (
-        <div className="mb-4">
+        <div className="mb-6">
           <EmptyListDashboard />
         </div>
       )}
