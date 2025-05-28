@@ -71,7 +71,7 @@ export default function Dashboard() {
           <Loading />
         </div>
       ) : userItems.length > 0 ? (
-        <>
+        <div className="mb-4">
           {userItems.slice(0, 6).map((item: Item) => {
             return (
               <ItemCard
@@ -91,9 +91,11 @@ export default function Dashboard() {
               Ver mais
             </p>
           </Link>
-        </>
+        </div>
       ) : (
-        <EmptyItemDashboard />
+        <div className="mb-4">
+          <EmptyItemDashboard />
+        </div>
       )}
     </div>
   );
