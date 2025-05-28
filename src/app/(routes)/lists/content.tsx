@@ -71,7 +71,7 @@ export function ListsContent() {
         <EmptyListDashboard />
       )}
 
-      <h1 className="text-darkBlue text-3xl font-bold mb-6 mt-9">
+      <h1 className="text-darkBlue text-3xl font-bold mb-12 mt-9">
         Listas compartilhadas
       </h1>
 
