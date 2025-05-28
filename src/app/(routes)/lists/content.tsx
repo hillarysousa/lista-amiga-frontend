@@ -89,7 +89,7 @@ export function ListsContent() {
           ))}
         </div>
       ) : (
-        <div className="mb-12">
+        <div className="mb-12 flex flex-row">
           <EmptyListDashboard />
         </div>
       )}
