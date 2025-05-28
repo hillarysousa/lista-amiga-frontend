@@ -25,6 +25,7 @@ export const useGetSharedLists = () => {
   return useQuery({
     queryKey: ["getSharedLists", user?.uid],
     enabled: !!user?.uid && !!token,
+    staleTime: Infinity,
     queryFn: async () => {
       if (!user || !token) {
         return [];

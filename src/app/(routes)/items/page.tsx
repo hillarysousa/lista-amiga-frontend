@@ -1,10 +1,11 @@
 "use client";
 
-import { EmptyItemDashboard } from "@/app/components/emptyItemsDashboard";
-import { ItemCard } from "@/app/components/itemCard";
 import { useGetUserItems } from "@/app/hooks/useGetUserItems";
 import { useAuth } from "@/app/providers/AuthProvider";
 import { Item } from "@/app/types/item";
+import { EmptyItemDashboard } from "@/app/components/emptyItemsDashboard";
+import { ItemCard } from "@/app/components/itemCard";
+import { Loading } from "@/app/components/loadingFullScreen";
 
 export default function Items() {
   const { user } = useAuth();
@@ -14,7 +15,7 @@ export default function Items() {
     error: errorItems,
   } = useGetUserItems();
 
-  if (loadingItems || !user) return <div>Carregando...</div>;
+  if (loadingItems || !user) return <Loading />;
   if (errorItems) return <div>Erro!</div>;
 
   return (
@@ -26,12 +27,14 @@ export default function Items() {
               <ItemCard
                 userId={user.uid}
                 itemId={item.id}
+                listId={item.list.id}
                 key={item.id}
                 name={item.name}
                 listName={item.list.name}
                 assignedUser={item.owner}
                 checked={item.checked}
                 createdAt={item.createdAt}
+                isItemPage
               />
             );
           })}

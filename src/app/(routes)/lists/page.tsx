@@ -1,11 +1,18 @@
 "use client";
-import { EmptyListDashboard } from "@/app/components/emptyListsDashboard";
-import { ListCard } from "@/app/components/listCard";
+import { useEffect } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useGetOwnLists } from "@/app/hooks/useGetOwnLists";
 import { useGetSharedLists } from "@/app/hooks/useGetSharedLists";
+import { useJoinList } from "@/app/hooks/useJoinList";
 import { List } from "@/app/types/list";
+import { EmptyListDashboard } from "@/app/components/emptyListsDashboard";
+import { ListCard } from "@/app/components/listCard";
+import { Loading } from "@/app/components/loadingFullScreen";
 
 export default function Lists() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const shareToken = searchParams.get("share");
   const {
     data: ownLists,
     isLoading: loadingOwnLists,
@@ -15,10 +22,32 @@ export default function Lists() {
   const {
     data: sharedLists,
     isLoading: loadingSharedLists,
+    refetch: refetchSharedLists,
     error: errorSharedLists,
   } = useGetSharedLists();
-  if (loadingSharedLists || loadingOwnLists)
-    return <div>Carregando as listas...</div>;
+
+  const { mutate, isIdle, isPending } = useJoinList();
+
+  useEffect(() => {
+    if (shareToken) {
+      mutate(shareToken, {
+        onSuccess: () => {
+          const newParams = new URLSearchParams(searchParams.toString());
+          newParams.delete("share");
+          router.replace(`?${newParams.toString()}`, { scroll: false });
+          refetchSharedLists();
+        },
+      });
+    }
+  }, [mutate, refetchSharedLists, router, searchParams, shareToken]);
+
+  if (
+    loadingSharedLists ||
+    loadingOwnLists ||
+    (shareToken && (isIdle || isPending))
+  )
+    return <Loading />;
+
   if (errorOwnLists || errorSharedLists) return <div>Erro!</div>;
 
   return (

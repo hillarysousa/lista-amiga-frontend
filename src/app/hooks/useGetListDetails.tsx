@@ -25,6 +25,7 @@ export const useGetListDetails = (listId: string | undefined) => {
   const { token } = useAuth();
   return useQuery({
     queryKey: ["getlistDetails", listId],
+    staleTime: Infinity,
     enabled: !!listId && !!token,
     queryFn: async () => {
       if (!listId || !token) {
