@@ -91,7 +91,7 @@ export function ListsContent() {
       ) : (
         <div className="mb-10 flex flex-column w-full h-full flex-wrap">
           <EmptyListDashboard />
-          <div className="h-12 block w-full" />
+          <div className="h-14 block w-full" />
         </div>
       )}
     </div>

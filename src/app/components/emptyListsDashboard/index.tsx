@@ -2,7 +2,7 @@ export const EmptyListDashboard = () => {
   return (
     <div
       aria-label={`sem listas`}
-      className="bg-[#f7f6f5] rounded-xl flex w-full p-4 mb-9 flex-col"
+      className="bg-[#f7f6f5] rounded-xl flex w-full p-4 mb-12 flex-col"
     >
       <h3 className="text-darkText text-base font-bold mb-5">
         Você não possui listas!
