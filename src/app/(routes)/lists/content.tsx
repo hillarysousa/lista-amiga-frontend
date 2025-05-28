@@ -53,7 +53,7 @@ export function ListsContent() {
   if (errorOwnLists || errorSharedLists) return <div>Erro!</div>;
 
   return (
-    <div className="w-full flex flex-col h-full relative">
+    <div className="w-full flex flex-col h-full relative pb-10">
       {ownLists && ownLists.length > 0 ? (
         <>
           {ownLists.map((list: List) => (
@@ -89,9 +89,7 @@ export function ListsContent() {
           ))}
         </div>
       ) : (
-        <div className="mb-12 flex flex-row">
-          <EmptyListDashboard />
-        </div>
+        <EmptyListDashboard />
       )}
     </div>
   );
