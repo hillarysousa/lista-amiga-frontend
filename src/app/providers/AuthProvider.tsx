@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }, [mutate]);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+    const unsubscribe = onAuthStateChanged(auth!, async (user) => {
       if (user) {
         const token = await user.getIdToken();
         mutate(token);
@@ -56,7 +56,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const login = async () => {
     try {
-      const result = await signInWithPopup(auth, provider);
+      const result = await signInWithPopup(auth!, provider!);
       const user = result.user;
       if (user) {
         const token = await user.getIdToken();
