@@ -17,7 +17,7 @@ export const ShareButton = ({ list, refetch }: ShareButtonProps) => {
     const shareData = {
       title: "Lista Amiga",
       text: `Oi! Quero compartilhar a lista ${list.name} com você 😊`,
-      url: `http://localhost:4000?share=${token}`,
+      url: `https://listaamiga.vercel.app/?share=${token}`,
     };
 
     return navigator.share(shareData);
