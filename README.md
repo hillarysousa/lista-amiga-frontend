@@ -7,7 +7,7 @@ Este é o frontend da aplicação **Lista Amiga**, uma plataforma para criar e c
 ## 🚀 Tecnologias Utilizadas
 
 - [Next.js](https://nextjs.org/)
-- [React](https://pt-br.legacy.reactjs.org/)
+- [React](https://pt-br.react.dev/)
 - [Firebase Authentication](https://firebase.google.com/?hl=pt-br)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [TypeScript](https://www.typescriptlang.org/)
